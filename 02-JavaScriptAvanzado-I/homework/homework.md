@@ -25,15 +25,15 @@ var c = function (a, b, c) {
 };
 c(8, 9, 10);
 console.log(b); //10 (porque es la variable global)
-console.log(x); // undefined? (porque no está declarada "x" global, solo está puesto el valor)
+console.log(x); // 1 (porque está declarada en el global)
 ```
 
 ```javascript
 console.log(bar);//undefined (por hosting, o sea, la variable está declarada después del console.log)
-console.log(baz);//error? (porque no está definido baz con var ni nada)
+console.log(baz);//error? (porque no está definido baz con var)
 foo();
 function foo() {
-   console.log('Hola!'); //hola (está bien porque el hosting con las funciones se ejecuta correctamente)
+   console.log('Hola!'); //hola (está bien porque el hosting con las funciones se ejecuta correctamente, aunque no llega a ejecutarse por el error de arriba)
 }
 var bar = 1;
 baz = 2;
@@ -53,10 +53,10 @@ console.log(instructor); //Tony
 (function () {
    if (true) {
       var instructor = 'Franco';
-      console.log(instructor); //Franco
+      console.log(instructor); //Franco (porque está dentro del mismo scoope)
    }
 })();
-console.log(instructor); //Tony (porque "Franco" está declarado dentro del contexto de la función o Franco porque creo que var se declara para cualquier contexto)
+console.log(instructor); //Tony (porque la funcion no está dentro del scoope global es una IIF, )
 ```
 
 ```javascript
@@ -68,7 +68,7 @@ if (true) {
    console.log(instructor);// The Flash (porque se sobreescribe la variable)
    console.log(pm);// "Reverse flash" (porque let solo tiene alcance en donde fue declarada)
 }
-console.log(instructor); //The flash?
+console.log(instructor); //The flash (porque var se sobreescribe)
 console.log(pm);//Franco (porque let solo tiene alcance en donde fue declarada)
 ```
 
@@ -77,22 +77,22 @@ console.log(pm);//Franco (porque let solo tiene alcance en donde fue declarada)
 ¿Cuál crees que será el resultado de la ejecución de estas operaciones?:
 
 ```javascript
-6 / "3" // 2
-"2" * "3" // 6
-4 + 5 + "px" // 9px (por el orden de prioridad, primero están los int)
-"$" + 4 + 5 // $45 (por el orden de prioridad, primero está el string)
-"4" - 2 // 2
-"4px" - 2 // 4px - 2 (lo transforma en string porque el 4 está con un string)
-7 / 0 // error (porque no se puede dividir por 0)
+6 / "3" // 2 (coerción)
+"2" * "3" // 6 (coerción)
+4 + 5 + "px" // 9px (presedencia de operadores, primero están los int, coerción)
+"$" + 4 + 5 // $45 (presedencia de operadores, primero está el string, coerción)
+"4" - 2 // 2 (coerción)
+"4px" - 2 // NaN (porque 4px no es un número)
+7 / 0 // infinity (porque no se puede dividir por 0)
 {}[0] // undefined (porque no hay nada definido)
-parseInt("09") //09 (number, está convirtiendo el string a int)
+parseInt("09") //9 (number, está convirtiendo el string a int)
 5 && 2 //2 (porque evalua si los dos son true, y al ser los dos, devuelve el ultimo como si devolviera un true)
 2 && 5 // 5 (porque evalua si los dos son true, y al ser los dos, devuelve el ultimo como si devolviera un true)
 5 || 0 // 5 (ya que evalúa la primera opción y es verdadera)
 0 || 5 // 5 (porque el 0 es un falsy)
-[3]+[3]-[10] //23 (toma los dos tres como si fueran strings y después le restan el 10)
+[3]+[3]-[10] //23 ( porque la suma a los arrays primero concatena porque toma como si fueran strings y después le restan el 10)
 3>2>1 //false (porque transforma el 3 > 2 en true y después compara ese true con el 1
-[] == ![] //true (porque no es una comparación literal? o sea ===)
+[] == ![] //true (porque no es una comparación extricta o sea ===, lo toma como que un array vacío es lo mismo que un array que no existe)
 ```
 
 > Si te quedó alguna duda repasá con [este artículo](http://javascript.info/tutorial/object-conversion).
@@ -125,7 +125,7 @@ function getFood(food) {
       var snack = 'Friskies'; //este valor nunca se cambia porque por
       return snack; //parametro ya se recibe un false, por lo cual nunca entra al if
    }
-   return snack;// no es Meow porque primero se crean las funciones? 
+   return snack;// no es Meow porque primero se crean las funciones 
 }
 
 getFood(false);
@@ -147,11 +147,11 @@ var obj = {
    },
 };
 
-console.log(obj.prop.getFullname()); // Natalia Nerea? (porque toma el contexto del obj en donde está declarada la funcion getFullname())
+console.log(obj.prop.getFullname()); // Aurelio De Rosa (porque estoy guardando el resultado de la ejecución)
 
 var test = obj.prop.getFullname;
 
-console.log(test()); //
+console.log(test()); //undefined (porque sabe que es una función pero no guarda lo que ejecuta)
 ```
 
 ### Event loop
@@ -160,14 +160,14 @@ Considerando el siguiente código, ¿Cuál sería el orden en el que se muestra 
 
 ```javascript
 function printing() {
-   console.log(1); // 2º (porque es por linea el primero que se ejecutaria si no estuviera el timeout de tiempo 0)
+   console.log(1); // 1º (porque es la primera línea)
    setTimeout(function () {
-      console.log(2); //4º (por el timeout 1000 que hace que espere 1000)
+      console.log(2); //4º (por el timeout 1000 que hace que espere 1 segundo)
    }, 1000); 
    setTimeout(function () {
       console.log(3);
-   }, 0); //1º este (porque es el que tiene la prioridad más baja)
-   console.log(4); //3º (porque por linea es el que se debería ejecutar antes del timeout de 1000) 
+   }, 0); //3º este (porque por el timeout se va a esperar en el eventum, y por más que sea 0 se va a esperar al event para poder ejecutarse)
+   console.log(4); //2º (porque es la segunda línea después de que los eventos con timeout) 
 }
 
 printing();
