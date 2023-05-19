@@ -29,7 +29,13 @@ que recibe por parámetro (cb); es decir, que "recuerde" el resultado de cada op
 al realizar una operación por segunda vez, se pueda obtener el resultado de esa "memoria" sin tener que efectuar 
 otra vez cálculos que ya se hicieron anteriormente.
 
-- cacheFunction debe retornar una función. Esta función debe aceptar un argumento (arg) e invocar a cb con ese argumento; hecho eso, debe guardar el argumento junto con el resultado de la invocación (tip: usá un objeto donde cada propiedad sea el argumento, y su valor el resultado de la correspondiente invocación a cb) de manera que, la próxima vez que reciba el mismo argumento, no sea necesario volver a invocar a cb, porque el resultado estará guardado en la "memoria caché".
+- cacheFunction debe retornar una función. Esta función debe aceptar un
+argumento (arg) e invocar a cb con ese argumento; hecho eso, 
+debe guardar el argumento junto con el resultado de la invocación
+(tip: usá un objeto donde cada propiedad sea el argumento, y su valor
+el resultado de la correspondiente invocación a cb) de manera que, la
+próxima vez que reciba el mismo argumento, no sea necesario volver a
+invocar a cb, porque el resultado estará guardado en la "memoria caché".
 
   Ejemplo:
   function square(n){
@@ -45,14 +51,25 @@ function cacheFunction(cb) {
 
   let memoria = {};
 
-  return function (arg){
-
-    if (memoria.hasOwnProperty(arg)) {
+  return function(arg){
+    if(memoria.hasOwnProperty(arg)){
       return memoria[arg];
-    } else {
-      return (memoria[arg] = cb(arg));
+    }
+    else {
+      return memoria[arg] = cb (arg);
     }
   }
+
+  // let memoria = {};
+
+  // return function (arg){
+
+  //   if (memoria.hasOwnProperty(arg)) {
+  //     return memoria[arg];
+  //   } else {
+  //     return (memoria[arg] = cb(arg));
+  //   }
+  // }
 }
 
 //----------------------------------------

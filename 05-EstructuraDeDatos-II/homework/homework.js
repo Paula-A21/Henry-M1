@@ -4,89 +4,91 @@
 Implementar la clase LinkedList, definiendo los siguientes métodos:
   - add: agrega un nuevo nodo al final de la lista;
   - remove: elimina el último nodo de la lista y retorna su valor (tener en cuenta el caso particular de una lista de un solo nodo y de una lista vacía);
-  - search: recibe un parámetro y lo busca dentro de la lista, con una particularidad: el parámetro puede ser un valor o un callback. En el primer caso, buscamos un nodo cuyo valor coincida con lo buscado; en el segundo, buscamos un nodo cuyo valor, al ser pasado como parámetro del callback, retorne true. 
+  - search: recibe un parámetro y lo busca dentro de la lista, con una
+  particularidad: el parámetro puede ser un valor o un callback. En el
+  primer caso, buscamos un nodo cuyo valor coincida con lo buscado; en
+  el segundo, buscamos un nodo cuyo valor, al ser pasado como parámetro 
+  del callback, retorne true. 
+
   EJEMPLO 
   search(3) busca un nodo cuyo valor sea 3;
   search(isEven), donde isEven es una función que retorna true cuando recibe por parámetro un número par, busca un nodo cuyo valor sea un número par.
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
-function LinkedList () {
-  this.head = null;
+function LinkedList() {
+  //Tren
   this._length = 0;
+  this.head = null; // Locomotora
 }
-    
-function Node (value) {
-  
+
+function Node(value) {
+  // Vagon
   this.value = value;
   this.next = null;
-    
-}
-   
-LinkedList.prototype.add = function (value){
-
-  let nuevoNode = new Node(value); //{data:valor , next:null}
-  let current = this.head; // parate en el primer elemento
-
-  if (current === null) {
-    // si la lista esta vacia
-    this.head = nuevoNode;
-
-  } else {
-      while (current.next) {
-        // mientras que no encuente el ultimo valor
-        current = current.next; // avanzo un paso
-      }
-
-      current.next = nuevoNode;
-    }
-
-  this._length++;
-  return nuevoNode;
 }
 
-LinkedList.prototype.remove = function (){
-
+LinkedList.prototype.add = function (value) {
+  // 3
+  let node = new Node(value); // {value:3,next:null}
   let current = this.head;
 
-  if (current === null){
-    return null;
-  }
-  else if (current.next === null){
+  if (!this.head) {
+    // this.head === null
+    this.head = node;
+    this._length++;
+    return node;
+  } else {
+    while (current.next) {
+      current = current.next;
+    }
 
-    let auxHead = this.head;
+    current.next = node;
+    this._length++;
+    return node;
+  }
+};
+
+LinkedList.prototype.remove = function () {
+  let current = this.head;
+
+  // if(this.head === null) return null
+  if (this._length === 0) return null;
+  else if (this._length === 1) {
+    let aux = current.value; // Elemento a eliminar
     this.head = null;
-
-    return auxHead;
+    this._length--;
+    return aux;
   }
 
-  while (current.next) {
-    current = current.next; 
+  while (current.next.next) {
+    // penultimo valor
+    current = current.next;
   }
-  let auxNode = current.next;
-  delete current.next;
 
+  let aux = current.next.value; // el valor que quiero eliminar
+
+  current.next = null;
   this._length--;
-  return auxNode; 
-}
+  return aux;
+};
 
-LinkedList.prototype.search = function (value){
+LinkedList.prototype.search = function (value) {
+  let current = this.head;
 
-  if(this.head === value){
-    return this.head
-  }
-  while (current.next) {
-    if(this.value === value){
-      return this.value;
+  if (this.head === null) return null;
+
+  while (current) {
+    if (current.value === value) {
+      return current.value;
+    } else if (typeof value === "function") {
+      if (value(current.value)) {
+        return current.value;
+      }
     }
-    else if(value(this.value) === true){
-
-      return this.value;
-    }
+    current = current.next;
   }
-  
   return null;
-  
-}
+};
 
 
 

@@ -78,18 +78,42 @@ function Queue() {
   this.queue = [];
 }
 
+// Queue.prototype.enqueue = function (value){
+//   if(!this.queue){
+//     let newQueue = new Queue(value);
+//     return newQueue;
+//   }
+//   else{
+//     return this.enqueue(value);
+//   }
+// }
+
 Queue.prototype.enqueue = function (valor){
   return this.queue.push(valor);
 }
+
 Queue.prototype.dequeue = function (){
-  if(!this.queue){
-    return undefined;
-  }
+  if(!this.queue) return undefined;
+  
   return this.queue.shift();
+  
 }
+
 Queue.prototype.size = function (){
   return this.queue.length;
 }
+
+
+
+// Queue.prototype.dequeue = function (){
+//   if(!this.queue){
+//     return undefined;
+//   }
+//   return this.queue.shift();
+// }
+// Queue.prototype.size = function (){
+//   return this.queue.length;
+// }
 
 
 /*⚠️ No modificar nada debajo de esta línea ⚠️*/
