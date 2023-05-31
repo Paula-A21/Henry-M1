@@ -20,9 +20,9 @@ function BinarySearchTree(value) {
    this.totalLength = 1;
  }
  
- BinarySearchTree.prototype.size = function(){
-  return this.totalLength;
- }
+  size = function(){
+    return this.totalLength;
+  }
  
  BinarySearchTree.prototype.insert = function (value) {
    // Mayor o menor
@@ -47,7 +47,7 @@ function BinarySearchTree(value) {
    this.totalLength++;
  };
  
- BinarySearchTree.prototype.contains = function (value){
+BinarySearchTree.prototype.contains = function (value){
   
   if(value === this.value){
     return true;
@@ -55,6 +55,7 @@ function BinarySearchTree(value) {
   else { 
     if (value < this.value) {
     if (this.left) {
+      console.log(this.left);
       return true;
     }
     else {
@@ -64,6 +65,7 @@ function BinarySearchTree(value) {
   }
   if(value > this.value){
       if (this.right) {
+        console.log(this.right);
         return true;
       }
       else {
@@ -72,7 +74,7 @@ function BinarySearchTree(value) {
     }
   }
 
- BinarySearchTree.prototype.depthFirstForEach = function (cb, order){
+BinarySearchTree.prototype.depthFirstForEach = function (cb, order){
 
   switch (order) {
     // root => izq > der
@@ -95,8 +97,7 @@ function BinarySearchTree(value) {
       cb(this.value);
       if (this.right !== null) this.right.depthFirstForEach(cb, order);
       break;
- 
- }
+  }
 }
 
 BinarySearchTree.prototype.breadthFirstForEach = function (cb, almacen = []) {
@@ -116,9 +117,6 @@ BinarySearchTree.prototype.breadthFirstForEach = function (cb, almacen = []) {
 }
 
  
-
-
-
 //  BinarySearchTree.prototype.insert = function(valor){
 //   if(valor <= this.root){
 //       if(this.left){
@@ -151,6 +149,7 @@ BinarySearchTree.prototype.breadthFirstForEach = function (cb, almacen = []) {
   return this.left.contains(arg)          
 }else return false       }    } }
 // }*/
+   
 // No modifiquen nada debajo de esta linea
 // --------------------------------
 

@@ -62,7 +62,7 @@ function insertionSort(array) {
     
     auxInsertar = array [i + 1];
 
-    if(array [i] > array [i + 1]){
+    if(array [i] > auxInsertar){
       
       let j = i;
 

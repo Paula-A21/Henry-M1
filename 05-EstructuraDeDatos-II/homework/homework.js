@@ -35,7 +35,7 @@ LinkedList.prototype.add = function (value) {
   if (!this.head) {
     // this.head === null
     this.head = node;
-    this._length++;
+    
     return node;
   } else {
     while (current.next) {
@@ -43,7 +43,7 @@ LinkedList.prototype.add = function (value) {
     }
 
     current.next = node;
-    this._length++;
+    
     return node;
   }
 };
@@ -51,9 +51,8 @@ LinkedList.prototype.add = function (value) {
 LinkedList.prototype.remove = function () {
   let current = this.head;
 
-  // if(this.head === null) return null
-  if (this._length === 0) return null;
-  else if (this._length === 1) {
+  if(this.head === null) return null
+  else if (current.next === null) {
     let aux = current.value; // Elemento a eliminar
     this.head = null;
     this._length--;
@@ -66,9 +65,8 @@ LinkedList.prototype.remove = function () {
   }
 
   let aux = current.next.value; // el valor que quiero eliminar
-
   current.next = null;
-  this._length--;
+
   return aux;
 };
 

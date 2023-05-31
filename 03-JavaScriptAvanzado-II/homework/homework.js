@@ -3,8 +3,8 @@
 // Closures
 
 /* Ejercicio 1
-La función counter debe retornar otra función. Esta función retornada debe actuar como un contador, retornando 
-un valor numérico que empieza en 1 e incrementa con cada invocación.
+La función counter debe retornar otra función. Esta función retornada debe actuar como un contador, 
+retornando un valor numérico que empieza en 1 e incrementa con cada invocación.
 EJEMPLO
 const nuevoContador = counter()
 nuevoContador()     // 1
@@ -14,20 +14,18 @@ const otroContador = counter()
 otroContador()      // 1
 otroContador()      // 2 */
 function counter() {
-
   let contador = 0;
 
-  return function(){
-    contador ++;  
-    return contador;
+  return function (){
+    return ++contador;
   }
 }
 
 /* Ejercicio 2
-Tu tarea aquí es lograr, mediante un closure, que cacheFunction actúe como una memoria caché para el callback 
-que recibe por parámetro (cb); es decir, que "recuerde" el resultado de cada operación que hace, de manera que, 
-al realizar una operación por segunda vez, se pueda obtener el resultado de esa "memoria" sin tener que efectuar 
-otra vez cálculos que ya se hicieron anteriormente.
+Tu tarea aquí es lograr, mediante un closure, que cacheFunction actúe como una memoria caché para el 
+callback que recibe por parámetro (cb); es decir, que "recuerde" el resultado de cada operación que hace,
+de manera que, al realizar una operación por segunda vez, se pueda obtener el resultado de esa "memoria"
+sin tener que efectuar otra vez cálculos que ya se hicieron anteriormente.
 
 - cacheFunction debe retornar una función. Esta función debe aceptar un
 argumento (arg) e invocar a cb con ese argumento; hecho eso, 
@@ -49,15 +47,17 @@ invocar a cb, porque el resultado estará guardado en la "memoria caché".
 
 function cacheFunction(cb) {
 
-  let memoria = {};
+  let memoria = {}
 
   return function(arg){
-    if(memoria.hasOwnProperty(arg)){
+    if (memoria.hasOwnProperty(arg)){
       return memoria[arg];
     }
-    else {
-      return memoria[arg] = cb (arg);
+    else{
+      return memoria[arg] = cb(arg);
     }
+  }
+  
   }
 
   // let memoria = {};
@@ -70,7 +70,7 @@ function cacheFunction(cb) {
   //     return (memoria[arg] = cb(arg));
   //   }
   // }
-}
+
 
 //----------------------------------------
 
@@ -92,7 +92,8 @@ function getNombre() {
 /*
   Ejercicio 3
   IMPORTANTE: no modificar el código de arriba (variables instructor y alumno, y función getNombre)
-  Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
+  Usando el método bind() guardar, en las dos variables declaradas a continuación, dos funciones que 
+  actúen como getNombre pero retornen el nombre del instructor y del alumno, respectivamente.
 */
 
 let getNombreInstructor = getNombre.bind(instructor);
@@ -100,16 +101,19 @@ let getNombreAlumno = getNombre.bind(alumno);
 
 /*
   Ejercicio 4
-  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a continuación, tres funciones que retornen una cadena (string) y el delimitador especificado (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
+  Sin modificar la función crearCadena, usar bind para guardar, en las tres variables declaradas a 
+  continuación, tres funciones que retornen una cadena (string) y el delimitador especificado
+  (asteriscos, guiones, y guiones bajos, respectivamente). Las funciones obtenidas deberían recibir 
+  solamente un argumento - la cadena de texto - ya que los otros argumentos habrán sido "bindeados". 
 */
 
 function crearCadena(delimitadorIzquierda, delimitadorDerecha, cadena) {
     return delimitadorIzquierda + cadena + delimitadorDerecha;
 }
 
-let textoAsteriscos = crearCadena.bind(this,"*", "*");
-let textoGuiones = crearCadena.bind(this, "-", "-");
-let textoUnderscore = crearCadena.bind(this,"_", "_");
+let textoAsteriscos = crearCadena.bind(this, "*", "*");
+let textoGuiones = crearCadena.bind(this, "-", "-" );
+let textoUnderscore = crearCadena.bind(this, "_", "_");
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
